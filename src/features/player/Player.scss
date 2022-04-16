@@ -1,0 +1,31 @@
+.Player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  flex: 1;
+
+  &-cards {
+    position: relative;
+  }
+
+  &-bottom {
+    bottom: 10px;
+  }
+
+  &-right {
+    align-items: flex-end;
+    top: 40%;
+  }
+
+  &-top {
+    top: 10px;
+  }
+
+  &-left {
+    align-items: flex-start;
+    top: 50%;
+  }
+}
