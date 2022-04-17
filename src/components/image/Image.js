@@ -5,6 +5,10 @@ function Image({ src, alt, ...rest }) {
   return <img src={src} alt={alt} {...rest} />;
 }
 
+Image.defaultProps = {
+  alt: "",
+};
+
 Image.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,

@@ -1,0 +1,13 @@
+@import "styles/variables.scss";
+
+.Button {
+  background-color: $color-orange;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
