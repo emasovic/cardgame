@@ -1,2 +1,10 @@
 $font-cursive: "Lobster", cursive;
 $font-lato: "Lato", sans-serif;
+$breakpoint-m: 1166px;
+$breakpoint-sm: 576px;
+
+$color-yellow: #c2c52e;
+$color-orange: #c77a2c;
+$color-green: #b9e1b6;
+
+$text-gradient: -webkit-linear-gradient($color-yellow, $color-orange);
