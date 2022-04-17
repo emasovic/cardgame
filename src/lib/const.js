@@ -12,9 +12,9 @@ export const POSITION = {
 
 export const PLAYER_POSITION = {
   0: POSITION.bottom,
-  1: POSITION.right,
+  1: POSITION.left,
   2: POSITION.top,
-  3: POSITION.left,
+  3: POSITION.right,
 };
 
 export const PLAYER_NAMES = {

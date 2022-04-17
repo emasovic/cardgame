@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import deck from "features/game/deckSlice";
-import players from "features/player/playerSlice";
+import game from "features/game/redux/gameSlice";
 
 export const store = configureStore({
   reducer: {
-    deck,
-    players,
+    game,
   },
 });

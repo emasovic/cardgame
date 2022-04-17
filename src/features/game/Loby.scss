@@ -1,18 +1,35 @@
 @import "styles/variables.scss";
 
+$loby-width: 550px;
+
 .Loby {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
+  max-width: $loby-width;
+  width: 100%;
+  margin: 0 auto;
 
   &-title {
     font-family: $font-cursive;
+    background: $text-gradient;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 58px;
   }
 
   &-item {
-    max-width: 200px;
     height: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #000;
+    background-color: #b9e1b6;
+    margin-bottom: 8px;
+    padding: 12px 8px;
+    border-radius: 8px;
+    width: 100%;
   }
 }

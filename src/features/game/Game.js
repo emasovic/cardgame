@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchDeck, selectDeck } from "./deckSlice";
-import Player from "../player/Player";
-import { PLAYER_POSITION, STATUS } from "lib/const";
+import {
+  fetchDeck,
+  clearPool,
+  selectPlayerIds,
+  selectTotal,
+  selectPlayers,
+} from "./redux/gameSlice";
+import Player from "./player/Player";
+import { STATUS } from "lib/const";
 import Loader from "components/loader/Loader";
-import { clearPool, selectPlayers } from "features/player/playerSlice";
 import { createClassName } from "lib/utils";
-import Card from "features/player/components/Card";
+import Card from "features/game/player/components/Card";
 
 import "./Game.scss";
+import Dialog from "components/dialog/Dialog";
+import Button from "components/button/Button";
 
 const CLASS = "Game";
 
@@ -18,20 +25,45 @@ const CARDS_PER_PLAYER = 10;
 export default function Game() {
   const dispatch = useDispatch();
   const { players } = useParams();
-  const { data, status } = useSelector(selectDeck);
-  const { pool } = useSelector(selectPlayers);
+  const { pool, status } = useSelector((state) => state.game);
+  const total = useSelector(selectTotal);
+  const ids = useSelector(selectPlayerIds);
+  const byId = useSelector(selectPlayers);
+  const [winners, setWinners] = useState([]);
+  const isLoading = status === STATUS.loading;
+  const shouldFindWinner = !isLoading && !byId[total - 1]?.cards.length;
+
+  const loadDeck = useCallback(
+    () => dispatch(fetchDeck({ count: CARDS_PER_PLAYER * players, players })),
+    [dispatch, players]
+  );
+
+  const newGame = () => {
+    setWinners([]);
+    loadDeck();
+  };
 
   useEffect(() => {
-    players && dispatch(fetchDeck({ deck_count: 1 }));
-  }, [dispatch, players]);
+    players && loadDeck();
+  }, [dispatch, players, loadDeck]);
 
   useEffect(() => {
-    if (pool.length === Number(players)) {
+    if (total && pool.length === total) {
       setTimeout(() => dispatch(clearPool()), 500);
     }
-  }, [pool, players, dispatch]);
+  }, [pool, total, dispatch]);
 
-  if (status === STATUS.loading || !data) return <Loader />;
+  useEffect(() => {
+    if (shouldFindWinner) {
+      const sorted = byId.sort((a, b) => b.points - a.points);
+      const winners = sorted.filter((i) => i.points === sorted[0].points);
+
+      setTimeout(() => setWinners(winners), 1000);
+    }
+  }, [shouldFindWinner, byId]);
+
+  if (isLoading) return <Loader />;
+
   return (
     <div className={CLASS}>
       <div className={createClassName([CLASS, "pool"])}>
@@ -39,16 +71,33 @@ export default function Game() {
           <Card key={index} card={i} />
         ))}
       </div>
-      {[...Array(Number(players)).keys()].map((i) => (
-        <Player
-          key={i}
-          position={PLAYER_POSITION[i]}
-          playerId={i}
-          deckId={data.deck_id}
-          count={CARDS_PER_PLAYER}
-          isHuman={i === 0}
-        />
+      {ids.map((i) => (
+        <Player key={i} id={i} />
       ))}
+
+      {!!winners.length && (
+        <Dialog isOpen={!!winners}>
+          <div className={createClassName([CLASS, "winners"])}>
+            <h2 className={createClassName([CLASS, "winners", "title"])}>
+              Winners
+            </h2>
+            <div className={createClassName([CLASS, "winners", "winner"])}>
+              <p>Name</p>
+              <p>Points</p>
+            </div>
+            {winners.map((i) => (
+              <div
+                key={i.id}
+                className={createClassName([CLASS, "winners", "winner"])}
+              >
+                <p>{i.name}</p>
+                <p>{i.points}</p>
+              </div>
+            ))}
+            <Button label="New game" onClick={newGame} />
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 }

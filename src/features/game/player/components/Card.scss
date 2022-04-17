@@ -1,0 +1,50 @@
+@import "styles/variables.scss";
+
+$card-lg-w: 100px;
+$card-lg-h: 120px;
+
+$card-md-w: 80px;
+$card-md-h: 100px;
+
+$card-sm-w: 50px;
+$card-sm-h: 70px;
+
+.Card {
+  width: $card-lg-w;
+  height: $card-lg-h;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-m) {
+    width: $card-md-w;
+    height: $card-md-h;
+    margin-right: -26px;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: $card-sm-w;
+    height: $card-sm-h;
+  }
+
+  &-facedown {
+    &-left {
+      margin-right: -60px;
+
+      @media (max-width: $breakpoint-sm) {
+        margin-right: -42px;
+      }
+    }
+
+    &-right {
+      margin-right: -60px;
+
+      @media (max-width: $breakpoint-sm) {
+        margin-right: -42px;
+      }
+    }
+
+    &:hover {
+      margin-bottom: 0;
+    }
+  }
+}

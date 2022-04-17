@@ -1,0 +1,58 @@
+@import "styles/variables.scss";
+
+.Player {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+
+  &-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    color: #fff;
+    &-name {
+      font-family: $font-cursive;
+
+      &-human {
+        color: $color-yellow;
+      }
+    }
+  }
+
+  &-cards {
+    position: relative;
+
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &-bottom {
+    bottom: 10px;
+    justify-content: center;
+  }
+
+  &-top {
+    top: 10px;
+  }
+
+  &-right,
+  &-left {
+    width: 50vw;
+    top: 40%;
+  }
+
+  &-right {
+    right: 70px;
+    align-items: flex-end;
+  }
+
+  &-left {
+    left: 20px;
+    align-items: flex-start;
+  }
+}
