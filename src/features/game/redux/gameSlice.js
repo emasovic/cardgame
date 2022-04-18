@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  current,
 } from "@reduxjs/toolkit";
 import { STATUS } from "lib/const";
 import { getDeck } from "./gameAPI";
@@ -33,20 +32,12 @@ export const gameSlice = createSlice({
         id: payload.player.id,
         changes: payload.player,
       });
-      state.currentPlayerIndex = payload.currentPlayerIndex;
-      state.pool = payload.pool;
+      state.currentPlayerIndex += 1;
+      state.pool.push(payload.poolItem);
     },
-    clearPool: (state) => {
-      const pool = [...current(state).pool];
-
-      const winner = pool.sort(
-        (a, b) => b.cardValue - a.cardValue || b.index - a.index
-      )[0];
-
-      const points = pool.map((i) => i.cardValue).reduce((a, b) => a + b, 0);
-
-      state.entities[winner.id].points += points;
-
+    clearPool: (state, { payload }) => {
+      state.entities[payload.winner.id].points += payload.points;
+      state.currentPlayerIndex = 0;
       state.pool = [];
     },
   },

@@ -1,5 +1,4 @@
 import axios from "axios";
-import queryString from "query-string";
 
 export const request = async (opts) => {
   if (!opts.url) {
@@ -8,10 +7,6 @@ export const request = async (opts) => {
 
   opts.baseURL = process.env.REACT_APP_API_URL;
   opts.method = opts.method || "get";
-
-  opts.paramsSerializer = (params) => {
-    return queryString.stringify(params);
-  };
 
   try {
     const res = await axios(opts);

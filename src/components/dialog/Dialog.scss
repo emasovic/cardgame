@@ -19,7 +19,8 @@ $dialog-width: 650px;
     flex-direction: column;
     padding: 20px;
     border: 2px solid $color-orange;
-    border-radius: 5px;
+    border-radius: 4px;
+    margin: 8px;
 
     &-header {
       display: flex;

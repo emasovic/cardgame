@@ -49,7 +49,12 @@ export default function Game() {
 
   useEffect(() => {
     if (total && pool.length === total) {
-      setTimeout(() => dispatch(clearPool()), 500);
+      const newPool = [...pool];
+      const winner = newPool.sort(
+        (a, b) => b.cardValue - a.cardValue || b.index - a.index
+      )[0];
+      const points = newPool.map((i) => i.cardValue).reduce((a, b) => a + b, 0);
+      setTimeout(() => dispatch(clearPool({ winner, points })), 500);
     }
   }, [pool, total, dispatch]);
 

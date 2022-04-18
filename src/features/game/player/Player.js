@@ -6,11 +6,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import classNames from "classnames";
 import { createClassName, getRandomNumber } from "lib/utils";
 import { CARD_VALUES, PLAYER_POSITION } from "lib/const";
-import {
-  selectPlayer,
-  selectTotal,
-  throwCard,
-} from "features/game/redux/gameSlice";
+import { selectPlayer, throwCard } from "features/game/redux/gameSlice";
 
 import "./Player.scss";
 
@@ -18,9 +14,8 @@ const CLASS = "Player";
 
 function Player({ id }) {
   const dispatch = useDispatch();
-  const { currentPlayerIndex, pool } = useSelector((state) => state.game);
+  const { currentPlayerIndex } = useSelector((state) => state.game);
   const player = useSelector((state) => selectPlayer(state, id));
-  const total = useSelector(selectTotal);
   const { cards, isHuman, points, position, name, index } = player;
   const isPlayersTurn = currentPlayerIndex === index;
   const isRobotsTurn = !isHuman && isPlayersTurn;
@@ -40,20 +35,14 @@ function Player({ id }) {
         (c, index) => index !== payload.card.index
       );
 
-      const newIndex =
-        total > currentPlayer.index + 1 ? currentPlayerIndex + 1 : 0;
-
-      const newPool = [...pool, poolItem];
-
       dispatch(
         throwCard({
           player: currentPlayer,
-          currentPlayerIndex: newIndex,
-          pool: newPool,
+          poolItem,
         })
       );
     },
-    [player, pool, dispatch, currentPlayerIndex, total]
+    [player, dispatch]
   );
 
   useEffect(() => {
