@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/card-game/static/css/main.6cfaa440.css",
+    "main.js": "/card-game/static/js/main.2524ce52.js",
+    "static/media/facedown.png": "/card-game/static/media/facedown.148c019f98d05b566a1d.png",
+    "static/media/background.jpg": "/card-game/static/media/background.769288b41765396cc929.jpg",
+    "index.html": "/card-game/index.html",
+    "main.6cfaa440.css.map": "/card-game/static/css/main.6cfaa440.css.map",
+    "main.2524ce52.js.map": "/card-game/static/js/main.2524ce52.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6cfaa440.css",
+    "static/js/main.2524ce52.js"
+  ]
+}
